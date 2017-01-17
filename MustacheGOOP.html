@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<input type="button" onclick="swapBackground()" value ="I Mustache You a Question"><br><br>
+<canvas id ='canvas' width="800" height="600"></canvas>
+<div id="color" style="width:300px;height:300px;"></div>
+
+
+<script>
+    var img = new Image();
+    img.src = 'Drump.png';
+
+    var b = 0;
+    randimage();
+
+    var backImg = new Image();
+    backImg.src = b;
+
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    var color = document.getElementById('color');
+
+
+    function randimage() {
+
+        var a = parseInt(Math.random()*2);
+
+        if(a == 0) b ='mustacheOne.png';
+        if(a == 1) b ='mustacheTwo.png';
+
+        //console.log(a);
+
+    }
+
+   /**function pick(event) {
+        var x = event.layerX;
+        var y = event.layerY;
+        var pixel = ctx.getImageData(x, y, 1, 1);
+        var data = pixel.data;
+        var rgba = 'rgba(' + data[0] + ',' + data[1] +
+                ',' + data[2] + ',' + (data[3] / 255) +'( '+ x+' '+y+')';
+        //color.style.background =  rgba;
+        color.textContent = rgba;
+ }//223, 268
+*/
+    function swapBackground(){
+
+        var canvas2 = document.createElement('canvas');
+        canvas2.id = 'canvas2';
+        canvas2.width = backImg.width;
+        canvas2.height = backImg.height;
+        canvas2.style.display ='none';
+
+        document.body.appendChild(canvas2); // adds the canvas to the body element
+        var ctx2 = canvas2.getContext('2d');
+
+        ctx2.drawImage(backImg, 0, 0);
+        backImg.style.display = 'none';
+console.log(canvas2.width);
+        for(var i = 0;i<canvas2.width;i++){
+
+            for(var j=0;j<canvas2.height;j++){
+
+                var pixel = ctx2.getImageData(i, j, 1, 1);
+
+                var data = pixel.data;
+
+                if((data[1]>120)&&(data[0]>120)&&(data[2]>120)){}
+                else if((data[1]<80)||(data[0]>50)){
+
+                    ctx.fillStyle="rgb("+data[0]+","+data[1]+","+data[2]+")";
+                    //ctx.fillStyle='red';
+                    ctx.fillRect(229-backImg.width/2+i,282-backImg.height/2+j,1,1);
+
+                }
+
+            }
+        }
+
+    }
+console.log(b);
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        img.style.display = 'none';
+      // loopForBlue();
+    };
+
+    backImg.onload = function(){
+        backImg.style.display = 'none';
+        backImg.style.width = '50%';
+        backImg.style.height = 'auto';
+    };
+
+
+//   canvas.addEventListener('mousemove', pick);
+
+
+</script>
+
+</body>
+
+</html>
